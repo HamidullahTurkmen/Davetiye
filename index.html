@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monira & Hamidullah</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #0d1b2a, #1b263b, #415a77); /* geri tonlu gece renkleri */
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #fff;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    .card-container {
+      perspective: 2000px;
+      width: 90vw;
+      max-width: 400px;
+      aspect-ratio: 2 / 3;
+      position: relative;
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1s ease;
+    }
+
+    .card.open {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      background-size: cover;
+      background-position: center;
+      backface-visibility: hidden;
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15);
+    }
+
+    .card-front {
+      background-image: url('assets/dis_kapak.jpg');
+    }
+
+    .card-back {
+      background-image: url('assets/ic_kapak.jpg');
+      transform: rotateY(180deg);
+    }
+
+    @media (max-width: 480px) {
+      .card-container {
+        width: 95vw;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Yıldız Katmanı -->
+<div class="stars" id="starsLayer"></div>
+
+<!-- Davetiye Kartı -->
+<div class="card-container" onclick="toggleCard()">
+  <div class="card" id="inviteCard">
+    <div class="card-face card-front"></div>
+    <div class="card-face card-back"></div>
+  </div>
+</div>
+
+<script>
+  function toggleCard() {
+    document.getElementById("inviteCard").classList.toggle("open");
+  }
+
+  // Yıldızları oluştur
+  const starsContainer = document.getElementById('starsLayer');
+  const numberOfStars = 100;
+
+  for (let i = 0; i < numberOfStars; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = Math.random() * 3 + 1;
+    star.style.width = star.style.height = `${size}px`;
+    star.style.top = `${Math.random() * 100}%`;
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.animationDelay = `${Math.random() * 3}s`;
+    starsContainer.appendChild(star);
+  }
+</script>
+
+</body>
+</html>
