@@ -12,16 +12,17 @@
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(to bottom, #0d1b2a, #1b263b, #415a77); /* geri tonlu gece renkleri */
+      height: 100vh;
+      background: linear-gradient(to bottom, #0d1b2a, #1b263b, #415a77);
       font-family: 'Segoe UI', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       overflow: hidden;
       position: relative;
     }
 
+    /* Yıldız Efekti */
     .stars {
       position: fixed;
       top: 0;
@@ -36,7 +37,7 @@
       position: absolute;
       background: white;
       border-radius: 50%;
-      box-shadow: 0 0 8px #fff;
+      box-shadow: 0 0 8px white;
       animation: twinkle 2s infinite ease-in-out;
     }
 
@@ -45,6 +46,7 @@
       50% { opacity: 1; transform: scale(1.5); }
     }
 
+    /* Davetiye kartı */
     .card-container {
       perspective: 2000px;
       width: 90vw;
@@ -87,46 +89,117 @@
       transform: rotateY(180deg);
     }
 
+    /* QR tıklanabilir alan */
+    .qr-link {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    /* QR kod üstü yazı */
+    .qr-text {
+      position: absolute;
+      bottom: 125px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 14px;
+      text-align: center;
+      z-index: 3;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 6px 10px;
+      border-radius: 8px;
+    }
+
+    /* QR kod altı açıklama */
+    .qr-note {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-60%);
+      font-size: 12px;
+      color: white;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 2px 6px;
+      border-radius: 6px;
+      text-align: center;
+      z-index: 3;
+      width: 55%;
+    }
+
     @media (max-width: 480px) {
       .card-container {
         width: 95vw;
+      }
+
+      .qr-text {
+        font-size: 12px;
+        padding: 4px 8px;
+      }
+
+      .qr-link {
+        width: 70px;
+        height: 70px;
+        bottom: 35px;
+      }
+
+      .qr-note {
+        font-size: 11px;
+        padding: 3px 6px;
       }
     }
   </style>
 </head>
 <body>
 
-<!-- Yıldız Katmanı -->
-<div class="stars" id="starsLayer"></div>
+  <!-- Yıldızlar -->
+  <div class="stars" id="starsLayer"></div>
 
-<!-- Davetiye Kartı -->
-<div class="card-container" onclick="toggleCard()">
-  <div class="card" id="inviteCard">
-    <div class="card-face card-front"></div>
-    <div class="card-face card-back"></div>
+  <!-- Davetiye Kartı -->
+  <div class="card-container" onclick="toggleCard()">
+    <div class="card" id="inviteCard">
+
+      <!-- Dış Kapak -->
+      <div class="card-face card-front"></div>
+
+      <!-- İç Kapak -->
+      <div class="card-face card-back">
+
+        
+        <!-- QR tıklama alanı -->
+        <a href="https://maps.app.goo.gl/JCqhFCytBKh1q3UZ8" class="qr-link" target="_blank" title="Google Harita ile git"></a>
+
+		<!-- QR üstü açıklama -->
+        <div class="qr-note">Konum için üzerine tıklayın<br>veya QR kodu okutun</div>
+
+      </div>
+    </div>
   </div>
-</div>
 
-<script>
-  function toggleCard() {
-    document.getElementById("inviteCard").classList.toggle("open");
-  }
+  <script>
+    function toggleCard() {
+      document.getElementById("inviteCard").classList.toggle("open");
+    }
 
-  // Yıldızları oluştur
-  const starsContainer = document.getElementById('starsLayer');
-  const numberOfStars = 100;
+    // Yıldız Efekti
+    const starsContainer = document.getElementById('starsLayer');
+    const numberOfStars = 100;
 
-  for (let i = 0; i < numberOfStars; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    const size = Math.random() * 3 + 1;
-    star.style.width = star.style.height = `${size}px`;
-    star.style.top = `${Math.random() * 100}%`;
-    star.style.left = `${Math.random() * 100}%`;
-    star.style.animationDelay = `${Math.random() * 3}s`;
-    starsContainer.appendChild(star);
-  }
-</script>
+    for (let i = 0; i < numberOfStars; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      const size = Math.random() * 3 + 1;
+      star.style.width = star.style.height = `${size}px`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.animationDelay = `${Math.random() * 3}s`;
+      starsContainer.appendChild(star);
+    }
+  </script>
 
 </body>
 </html>
